@@ -1,0 +1,34 @@
+<%- include('../partials/head', { title }) %>
+
+<section class="card stack">
+  <h1 style="margin: 0">New Weather Note</h1>
+  <p class="muted" style="margin: 0">
+    Enter a city and a short note. The app calls Open‑Meteo for live weather, then saves everything to MongoDB.
+  </p>
+
+  <% if (error) { %>
+    <div class="error"><%= error %></div>
+  <% } %>
+
+  <form method="POST" action="/entries" class="stack">
+    <div class="row">
+      <label for="city">City</label>
+      <input id="city" name="city" required value="<%= values.city %>" placeholder="College Park" />
+    </div>
+
+    <div class="row">
+      <label for="note">Note</label>
+      <textarea id="note" name="note" required maxlength="280" placeholder="e.g., Great day for a walk!"><%= values.note %></textarea>
+    </div>
+
+    <div>
+      <button type="submit">Save Note</button>
+    </div>
+
+    <p class="muted" style="margin: 0">
+      Tip: API demo endpoint is <code>/weather?city=College%20Park</code>
+    </p>
+  </form>
+</section>
+
+<%- include('../partials/foot') %>

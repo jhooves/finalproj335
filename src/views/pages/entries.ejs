@@ -1,0 +1,34 @@
+<%- include('../partials/head', { title }) %>
+
+<section class="card stack">
+  <div style="display:flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap;">
+    <h1 style="margin: 0">Recent Weather Notes</h1>
+    <a href="/entries/new" class="muted">Create another</a>
+  </div>
+
+  <% if (!entries || entries.length === 0) { %>
+    <p class="muted" style="margin: 0">No entries yet.</p>
+  <% } %>
+
+  <% (entries || []).forEach((e) => { %>
+    <article class="card entry">
+      <div class="entry-meta">
+        <span><strong><%= e.weather.resolvedName %></strong></span>
+        <span>Temp: <%= e.weather.temperatureC %>°C</span>
+        <span>Code: <%= e.weather.weatherCode %></span>
+        <span>Saved: <%= new Date(e.createdAt).toLocaleString() %></span>
+      </div>
+      <div>
+        <div class="muted" style="font-size: 14px">Your note</div>
+        <div><%= e.note %></div>
+      </div>
+      <div class="actions">
+        <form method="POST" action="/entries/<%= e._id %>/delete">
+          <button type="submit">Delete</button>
+        </form>
+      </div>
+    </article>
+  <% }) %>
+</section>
+
+<%- include('../partials/foot') %>
